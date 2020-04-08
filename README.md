@@ -1,3 +1,5 @@
 # Invoke-SpoofCheck
 
-![Example-Spoofable](/images/spoofable-true.png)
+![Example-Spoofable](/images/example-spoofable.png)
+
+![Example-Not Spoofable](/images/example-notspoofable.png)
