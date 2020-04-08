@@ -5,14 +5,20 @@
 	.DESCRIPTION
 		Run checks against a single domain to determine if it is possible to spoof email
 		If the result "Spoofable" is returned true, it is possible in some way to spoof emails sent for that domain. 
-
-		VERSION
-		0.1	Initial Creation - 08/04/2020 - David PItre
-
-		TODO
-		1. 	Include functions that abuse each of the misconfigurations for SPF and DMARC
-		2. 	Output results to a report
 	
+	.NOTES
+	===========================================================================
+	 Created on:   		08/04/2020
+	 Created by:   		David Pitre
+	 Filename:     		Invoke-SpoofCheck.ps1
+	 Version:			0.1
+	 Classification:	Public
+
+	 TODO
+	 1.	Include functions that abuse each of the misconfigurations for SPF and DMARC
+	 2. Output results to a report
+	===========================================================================
+
 	.EXAMPLE
 		PS C:\> Invoke-SpoofCheck -DomainName google.com
 	
