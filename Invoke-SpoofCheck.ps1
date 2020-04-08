@@ -11,7 +11,7 @@
 	 Created on:   		08/04/2020
 	 Created by:   		David Pitre
 	 Filename:     		Invoke-SpoofCheck.ps1
-	 Version:			0.1
+	 Version:		0.1
 	 Classification:	Public
 
 	 TODO
