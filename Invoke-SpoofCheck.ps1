@@ -11,7 +11,7 @@
 	 Created on:   		08/04/2020
 	 Created by:   		David Pitre
 	 Filename:     		Invoke-SpoofCheck.ps1
-	 Version:		0.1
+	 Version:			0.1
 	 Classification:	Public
 
 	 TODO
@@ -67,15 +67,22 @@ function Get-SpfRecord
 	}
 	PROCESS
 	{
-		[array]$Results = Resolve-DnsName -Name $DomainName -Type TXT -ErrorAction SilentlyContinue
-		if (-not ([array]$Results))
+		try
 		{
-			Write-Verbose -Message "Domain does not host a SPF Record"
-			[object]$DomainObject.SPFRecord = [bool]$false
+			[array]$Results = Resolve-DnsName -Name $DomainName -Type TXT -ErrorAction SilentlyContinue
+			if (-not ([array]$Results))
+			{
+				Write-Verbose -Message "Domain does not host a SPF Record"
+				[object]$DomainObject.SPFRecord = [bool]$false
+			}
+			else
+			{
+				[object]$DomainObject.SPFRecord = ([array]$Results | Where-Object -Property Strings -match "^v=spf1").strings
+			}
 		}
-		else
+		catch
 		{
-			[object]$DomainObject.SPFRecord = ([array]$Results | Where-Object -Property Strings -match "^v=spf1").strings
+			throw "Unable to query the SPF Record for the domain {0}" -f $DomainName
 		}
 	}
 	END
@@ -97,14 +104,21 @@ function Get-DmarcRecord
 	}
 	PROCESS
 	{
-		[array]$Results = Resolve-DnsName -Name "_dmarc.$($DomainName)" -Type TXT -ErrorAction SilentlyContinue
-		if (-not ([array]$Results))
+		try
 		{
-			Write-Verbose -Message "Domain does not host a DMARC Record"
+			[array]$Results = Resolve-DnsName -Name "_dmarc.$($DomainName)" -Type TXT -ErrorAction SilentlyContinue
+			if (-not ([array]$Results))
+			{
+				Write-Verbose -Message "Domain does not host a DMARC Record"
+			}
+			else
+			{
+				[object]$DomainObject.DMARCRecord = ([array]$Results | Where-Object -Property Strings -match "^v=DMARC1").Strings
+			}
 		}
-		else
+		catch
 		{
-			[object]$DomainObject.DMARCRecord = ([array]$Results | Where-Object -Property Strings -match "^v=DMARC1").Strings
+			throw "Unable to query the Dmarc Record for the domain {0}" -f $DomainName
 		}
 	}
 	END
