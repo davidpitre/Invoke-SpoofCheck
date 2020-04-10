@@ -11,7 +11,7 @@
 	 Created on:   		08/04/2020
 	 Created by:   		David Pitre
 	 Filename:     		Invoke-SpoofCheck.ps1
-	 Version:			0.1
+	 Version:		0.1
 	 Classification:	Public
 
 	 TODO
@@ -195,24 +195,31 @@ function Invoke-SpoofCheck
 	}
 	PROCESS
 	{
-		Get-SpfRecord -DomainName $DomainName
-		Get-DmarcRecord -DomainName $DomainName
-		Invoke-ValidateSPFRecord -SPFRecord $DomainObject.SPFRecord
-		Invoke-ValidateDmarcRecord -DmarcRecord $DomainObject.DMARCRecord
-		If ([object]$DomainObject.SPFRecord -eq $null -or `
-			[object]$DomainObject.SPFFailureType -eq "Soft" -or `
-			[object]$DomainObject.DMARCRecord -eq $null -or `
-			[object]$DomainObject.DMARCPolicy -eq $null)
+		try
 		{
-			[object]$DomainObject.Spoofable = [bool]$true
+			Get-SpfRecord -DomainName $DomainName
+			Get-DmarcRecord -DomainName $DomainName
+			Invoke-ValidateSPFRecord -SPFRecord $DomainObject.SPFRecord
+			Invoke-ValidateDmarcRecord -DmarcRecord $DomainObject.DMARCRecord
+			If ([object]$DomainObject.SPFRecord -eq $null -or `
+				[object]$DomainObject.SPFFailureType -eq "Soft" -or `
+				[object]$DomainObject.DMARCRecord -eq $null -or `
+				[object]$DomainObject.DMARCPolicy -eq $null)
+			{
+				[object]$DomainObject.Spoofable = [bool]$true
+			}
+			if ([object]$DomainObject)
+			{
+				return [bool]$true
+			}
+			else
+			{
+				Write-Verbose -Message "Invoke-SpoofCheck: The DomainObject is null"
+			}
 		}
-		if ([object]$DomainObject)
+		catch
 		{
-			return [bool]$true
-		}
-		else
-		{
-			Write-Verbose -Message "Invoke-SpoofCheck: The DomainObject is null"
+			throw "Something went wrong: feel free to create a issue on github repo @ https://github.com/davidpitre/Invoke-SpoofCheck "
 		}
 	}
 	END
