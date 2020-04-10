@@ -219,7 +219,7 @@ function Invoke-SpoofCheck
 		}
 		catch
 		{
-			throw "Something went wrong: feel free to create a issue on github repo @ https://github.com/davidpitre/Invoke-SpoofCheck "
+			throw "Something went wrong: feel free to create a issue on the github repo @ https://github.com/davidpitre/Invoke-SpoofCheck"
 		}
 	}
 	END
