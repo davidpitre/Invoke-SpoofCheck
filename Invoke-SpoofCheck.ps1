@@ -6,6 +6,9 @@
 		Run checks against a single domain to determine if it is possible to spoof email
 		If the result "Spoofable" is returned true, it is possible in some way to spoof emails sent for that domain. 
 	
+	.PARAMETER DomainName
+		The domain to check
+	
 	.NOTES
 	===========================================================================
 	 Created on:   		08/04/2020
