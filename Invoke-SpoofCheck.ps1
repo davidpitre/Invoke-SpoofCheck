@@ -15,7 +15,7 @@
 	 Classification:	Public
 
 	 TODO
-	 1.	Include functions that abuse each of the misconfigurations for SPF and DMARC
+	 1. Include functions that abuse each of the misconfigurations for SPF and DMARC
 	 2. Output results to a report
 	===========================================================================
 
