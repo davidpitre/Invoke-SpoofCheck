@@ -177,7 +177,7 @@ function Invoke-ValidateDmarcRecord
 	{
 		if ([string]$DmarcRecord -match "p=quarantine")
 		{
-			[object]$DomainObject.DMARCPolicy = "Quaruntine"
+			[object]$DomainObject.DMARCPolicy = "Quarantine"
 		}
 		elseif ([string]$DmarcRecord -match "p=reject")
 		{
